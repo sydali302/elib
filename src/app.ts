@@ -7,6 +7,8 @@ const app = express();
 // http methods: get put post patch delete
 app.get('/',(req,res,next)=> {
     res.json({message:"welcome to elib apis"})
-})
+});
+
+app.use()
 
 export default app;
