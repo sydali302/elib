@@ -19,9 +19,7 @@ app.get('/',(req,res,next)=> {
     res.json({message:"welcome to elib apis"})
 });
 
-app.use("/api/users",useRouter);
-app.use('/api/users',createUser);
-
+app.use("/api/users", useRouter);
 app.use(globalErrorHandler);
 
 export default app;
