@@ -3,7 +3,10 @@ import express, {Request, Response, NextFunction} from 'express'
 import globalErrorHandler from './middlewares/globalErrorHandlers';
 import useRouter from './user/userRouter';
 import { createUser } from './user/userController';
+
+
 const app = express();
+app.use(express.json());
 
 //routes urls
 
