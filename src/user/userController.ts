@@ -4,6 +4,7 @@ import userModel from "./userModel";
 import bcrypt from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { config } from "../config/config";
+import {User} from "./userTypes"
 
 const createUser = async (req: Request, res: Response, next: NextFunction) => {
   //step 1 in create user is validation
@@ -39,12 +40,12 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
 
   }
   
- 
+ let newUser:User;
   // password hash to store in db.. use bycrypt
   try{
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = await userModel.create({
+    newUser = await userModel.create({
       name,
       email,
       password: hashedPassword,
@@ -52,21 +53,31 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
   
     // token generation JWT for security
   
-    const token = sign({ sub: newUser._id }, config.jwtSecret as string, {
-      expiresIn: "7d",
-      algorithm: "HS256",
-    });
+   
 
   }catch(err){
     return next(createHttpError())
   }
- 
 
-  //process
-  //response
+  try{
+
+    // token generation JWT
+  const token = sign({ sub: newUser._id }, config.jwtSecret as string, {
+    expiresIn: "7d",
+    algorithm: "HS256",
+  });
   res.json({
     accessToken: token,
   });
+
+  }catch(err){
+
+    return next(createHttpError(500,"Error while signing the jwt token"))
+  }
+  
+  //process
+  //response
+ 
 };
 
 export { createUser };
