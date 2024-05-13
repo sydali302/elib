@@ -8,6 +8,9 @@ const createBook = async (
     next: NextFunction
 )=>{
 res.json({});
+// send files via api in multi part form data
+// Multer is a node.js middleware for handling multipart/form-data, which is primarily used for uploading files.
+
 };
 
 export {createBook}
