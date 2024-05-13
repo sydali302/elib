@@ -6,7 +6,7 @@ import {createBook} from "./bookController"
 const bookRouter = express.Router();
 
 
-//routes
+//routes : every router needs to be register in the app file
 
 bookRouter.post("/",createBook);
 
